@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickBooks</title>
+    <link rel="stylesheet" href="styles/index.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    
+
+    <nav>
+        <label class="logo">QuickBooks</label>
+        <ul>
+            <li><a href="#" class="header-elem active">Home</a> </li>
+            <li><a href="#" class="header-elem">Bookings</a> </li>
+            <li><a href="#" class="header-elem">Contact</a> </li>
+            <li><a href="#" class="header-elem">About</a></li>         
+            <li><a href="/profile" class="header-elem">Profile</a> </li>
+            <li><a href="#" class="header-elem"><img src="styles/cart.png" alt="" id="cart"></a> </li>
+
+
+        </ul>
+    </nav>
+
+    <div id="cart-display">
+        <div id="cart-content-container">
+            <div>test1</div>
+        <div>test1</div>
+        <div>test1</div>
+        <div>test1</div>
+        </div>
+        
+
+        <div id="checkout-cart"> Checkout → </div>
+
+    </div>
+
+    <img src="styles/travelpic.jpeg" alt="" id="travelpic">
+
+    <div class="options-container">
+
+        <form action="/filter" method="POST">
+            <div><strong><small>For the filter to work, please select a category and hotel chain preferred</small></strong> </div><br>
+
+        <label for="from-date-output">From:</label>
+            <input type="date" id="from-date-output" name="from-date-output" required>
+
+            <label for="to-date-output">To:</label>
+            <input type="date" id="to-date-output" name="to-date-output" required>
+
+            <label for="area-output">Area: </label>
+            <input type="text" id="area-output" name="area-output" placeholder="Area(square meter)" class="filter" >
+            
+            <input type="hidden" name="select-chain-output" id="select-chain-output">
+            <select name="chain-output" id="chain-output" form="chain-output" required>
+                <option value="">Hotel Chain</option>
+                <option value="1">Crystal Crown Hotels</option>
+                <option value="2">Horizon Heights Hotels</option>
+                <option value="3">Serenity Hotels</option>
+                <option value="4">Stellar Stay Hotels</option>
+                <option value="5">Radiant Hotels</option>
+            </select>
+            
+            <input type="hidden" name="select-category-output" id="select-category-output" >
+            <select name="category-output" id="category-output" form="category-output" required>
+                <option value="">Category</option>
+                <option value="suite">Suite</option>
+                <option value="resort">Resort</option>
+                <option value="luxury">Luxury</option>
+            </select>
+
+            <input type="text" placeholder="Total rooms" id="totalroom-output" class="filter" name="totalrooms">
+
+            <br>
+            <br>
+            <div id="min-max-div">
+
+            <label for="min-output">Min:</label>
+            <input type="text" placeholder="$value" id="min-output" name="min-output" class="filter">
+
+            <label for="max-output">Max:</label>
+            <input type="text" id="max-output" name="max-output" placeholder="$value" class="filter" >
+            <button type="submit" class="search">SUBMIT</button>
+        </div>
+
+            
+
+        </form>
+
+        </div>
+        <!-- <div id="from-option">
+            <h1 class="date-h1">From: </h1>
+           <input type="date" id="from-date-output">
+        </div>
+
+        <div id="to-option">
+            <div id="from-option" name="" id="">
+                <h1 class="date-h1">To: </h1>
+               <input type="date" id="to-date-output">
+            </div>
+        </div>
+
+        <div id="area-option">
+            <input type="text" name="" id="area-output" placeholder="Area (square meter)"> -->
+            
+        <!-- </div>
+        <div id="chain-option">
+            <select name="" id="chain-output">
+                <option value="none"disabled selected hidden>Hotel Chain</option>
+                <option value="Crystal Crown Hotels">Crystal Crown Hotels</option>
+                <option value="Horizon Heights Hotels">Horizon Heights Hotels</option>
+                <option value="Serenity Hotels">Serenity Hotels</option>
+                <option value="Stellar Stay Hotels">Stellar Stay Hotels</option>
+                <option value="Radiant Hotels">Radiant Hotels</option>
+            </select>
+            <span class="custom-arrow"></span>
+        </div>
+        <div id="category-option">
+            <select name="" id="category-output">
+                <option value="none"disabled selected hidden>Category</option>
+                <option value="Suite">Suite</option>
+                <option value="Resort">Resort</option>
+                <option value="Luxury">Luxury</option>
+    
+            </select>
+            <span class="custom-arrow"></span>
+        </div>
+        <div id="totalroom-option">
+            <input type="text" placeholder="Total rooms" id="totalroom-output">
+        </div>
+        
+
+        <button class="search">Search</button>
+
+    </div> -->
+
+    <!-- <div id="price-options-container">
+
+        <div id="price-option-min">
+            <h1 class="range-h1">Min:</h1>
+           <input type="text" placeholder="$value">
+        </div>
+        <div id="price-option-max">
+            <h1 class="range-h1">Max:</h1>
+            <input type="text" placeholder="$value">
+        </div>
+    </div> -->
+
+    <div id="all-hotel-container">
+        <%if(locals.hotels){ %>
+            <% for(var hotel of hotels) { %> 
+                <div class="individual-hotel-div">
+                    <div class="hotel-img-div"> 
+                        <img src="https://cdn.britannica.com/96/115096-050-5AFDAF5D/Bellagio-Hotel-Casino-Las-Vegas.jpg" alt="" class="hotel-div-img"></div>
+                <br>
+                        <form action="/addHotel" method="POST" >
+                    <input type="text" name="nom_chaine" value="<%=hotel.nom_chaine %>" readonly class="read-only-value"><br>
+                    <input type="text" name="nom_hotel" value="<%=hotel.nom_hotel%>" readonly class="read-only-value"><br>
+                    <input type="text" name="categorie" value="Category: <%= hotel.categorie%>" readonly class="read-only-value"><br>
+                    <input type="text" name="description" value="<%= hotel.description %>" readonly class="read-only-value"><br>
+                    <input type="text" name="nombre_chambre" value="Total rooms: <%= hotel.nombre_chambre %>" readonly class="read-only-value"><br>
+                    <br>
+
+                    <div><strong>Contact info: </strong></div>
+                    <input type="text" name="adresse" value="<%= hotel.adresse %>" readonly class="read-only-value"><br>
+                    <input type="tel" name="num_tel" value="<%= hotel.num_tel %>" readonly class="read-only-value"><br>
+                    <input type="text" name="email" value="<%= hotel.email %>" readonly class="read-only-value"><br>
+
+
+                    <br>
+                    <hr>
+                    <br>
+        
+
+                    <%if(locals.rooms){ %>
+                        <% for(var room of rooms) { %> 
+                            <%if(room.id_hotel === hotel.id_hotel && room.disponibilite === true){ %>
+                                <div>
+                                    <div><%=room.description %></div>
+                                    <div>Comes with: <%=room.commodites %></div>
+                                    <div>View: <%=room.vue %></div>
+                                    <div><%=room.superficie_m2%> square meters</div>
+                                    <div>Capacity: <%=room.capacite %></div>
+                                    <div>$<%=room.prix %>/night
+                                    <input type="text" class="nodisplay" name="room-nums" value="<%=room.num_chambre%>">
+                    &nbsp;          
+                    <% if(locals.dates){%>
+                                    <input type="text" name="quantities" placeholder="Quantity" class="quantity-input" height="30px" width="30px" > </div>
+                                    <% }%>
+                                    
+
+                    <br>
+                     <br>
+                     
+                </div>
+                    <% } %>
+
+                    <% } %>
+                    <br>
+                    <% if(locals.dates){%>
+                        <div>From:<%= dates[0] %>  To:<%= dates[1] %></div>
+                        <br>
+                    <button class="add-hotel-btn" id="<%= hotel.nom_hotel %>" type="submit" name="hotelID" value="<%= hotel.id_hotel %>">RESERVE</button>
+                    <% }%>
+                    <% } %>
+                            
+                    
+
+            </form>
+
+                <br>
+                <hr>
+            </div>
+        <% } %>
+
+        <% } %>
+<!-- INSERT INTO hotel(id_hotel,id_chaine,id_gestionnaire,nom_hotel,nombre_chambre,adresse,num_tel,
+    nombre_etoile,email,categorie,nom_chaine,description)
+-->
+        </div>
+
+        
+
+    
+    
+    <script>
+       
+ 
+
+        $("#cart").on("click", function () {
+            const attr = $("#cart-display").css("display");
+            if(attr === "none"){
+                $("#cart-display").css("display", "flex");
+            }else{
+                $("#cart-display").css("display", "none");
+            }
+        });
+
+     $(".add-hotel-btn").click(function () {
+        let hhh = $(".add-hotel-btn").parent().html();
+        console.log(hhh);
+     })
+        
+
+        $(".search").on("click", () => {
+            
+    const category = document.getElementById("category-output").value;
+    const chain = document.getElementById("chain-output").value;
+    const totalRoom = document.getElementById("totalroom-output").value;
+    const fromDate = document.getElementById("from-date-output").value;
+    const toDate = document.getElementById("to-date-output").value;
+    const area = document.getElementById("area-output").value;
+
+
+     $("#select-chain-output").val(chain);
+     $("#select-category-output").val(category);
+
+
+
+    // if(totalRoom.length == 0 ){
+    //     alert("none")
+    // }
+
+    console.log(category, chain, totalRoom, fromDate, toDate,area)
+    
+// adding hotels below
+    $("#all-hotel-container").append("");
+
+    
+});
+    </script>
+</body>
+</html>

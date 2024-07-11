@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="styles/profile.css">
+</head>
+<body>
+    <nav>
+        <label class="logo">QuickBooks</label>
+        <ul>
+            <li><a href="/" class="header-elem ">Dashboard</a> </li>
+            <li><a href="/rooms" class="header-elem ">Rooms</a> </li>
+            <li><a href="/employees" class="header-elem ">Employees</a> </li>
+        </ul>
+    </nav>
+<br>
+
+
+
+<div class="personal-info-div">
+    <h2>Hotel Profile</h2>
+    <br>
+    <br>
+    <div>ID: <%= hotelInfo[0].id_hotel %> </div>
+    <div>Hotel chain: <%= hotelInfo[0].nom_chaine %> </div>
+    <div>Name: <%= hotelInfo[0].nom_hotel %> </div>
+    <div>Category: <%= hotelInfo[0].categorie %> </div>
+    <div><%= hotelInfo[0].nombre_etoile %> stars</div>
+   <br>
+   <div>Description: <%= hotelInfo[0].description %> </div>
+    <div>Adresse: <%= hotelInfo[0].adresse %> </div>
+    <div>Phone Number: <%= hotelInfo[0].num_tel %>  </div>
+    <div>Email: <%= hotelInfo[0].email %> </div>
+    <br>
+    
+
+    <br>
+    <hr>
+    <br>
+
+    <h3>Update your info below : <br><small>Disclaimer : Changes will take effect on next login</small></h3>
+    
+    
+    <br>
+        <form action="/update-hotel" method="POST">
+            <label for="hname">Hotel name: </label><br>
+            <input type="text" id="hname" name="hname" required><br>
+            <br>
+            <label for="cname">Chain name:</label><br>
+            <input type="text" id="cname" name="cname" required><br>
+            <br>
+            <label for="category">Category:</label><br>
+            <input type="text" id="category" name="category" required><br>
+            <br>
+            <label for="phone number">Phone number: <br> <small>Format: 123-456-7890</small></label><br>
+            <input type="text" id="phone number" name="phone number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br>
+            <br>
+            <label for="address">Full address: <br> <small>Format: APT - Address line 1 - City, State/Province , 
+                Postal/ZIP , Country </small></label><br>
+            <input type="text" id="address" name="address" required><br>
+            <br>
+
+            <label for="desc">Description:</label><br>
+            <input type="text" id="desc" name="desc" required><br>
+            <br>
+
+            <button class="hotelsubmit" type="submit" name="hotel-id" value="<%= hotelInfo[0].id_hotel %>" id=""> Submit changes</button> <br>
+            <br>
+             <br>
+
+        </form>
+
+</div>
+
+<br>
+<br>
+<hr>
+<br>
+<br>
+
+<div id="reservation-container">
+       
+    <h3 class="employees-h3">&nbsp; Reservations</h3>
+    <br>
+    <br>
+
+    <% for(let i = 0 ; i < reservations.length; i++) {%>
+        <% if(reservations[i].id_hotel === hotelInfo[0].id_hotel){ %>
+
+        <ul>
+            <li> &nbsp; <strong>Room #<%=reservations[i].num_chambre %></strong></li>
+            <li> &nbsp; Booked on: <%= reservations[i].date_reservation %></li>
+            <li> &nbsp; Check-In: <%= reservations[i].date_arrivee %></li>
+            <li>&nbsp; Check-Out: <%= reservations[i].date_depart%></li>
+            <li>&nbsp; Status: <%= reservations[i].statut%></li>
+
+
+            <br>
+            
+
+            <% if(locals.clients) {%>
+                <% for(let j = 0 ; j < clients.length; j++) {%>
+                    <% if(clients[j].nas_client === reservations[i].nas_client) {%>
+
+                <li> &nbsp; Booked by: <%= clients[j].prenom%> <%= clients[j].nom%></li>
+                <li> &nbsp; <%= clients[j].adresse%> </li>
+                <li> &nbsp; <%= clients[j].email%> </li>
+                <li> &nbsp; <%= clients[j].num_tel%> </li>
+
+
+                <% } %>
+                <% } %>
+                <% } %>
+
+                <% if(reservations[i].statut === "checked-in") {%>
+                    
+                    &nbsp; <div> Client is checked-in</div>
+                        
+                    <% } %>
+
+                <% if(reservations[i].statut === "pending") {%>
+                <form action="/confirmBooking" method="POST">
+                    <label for="room-number"></label>
+                    <button name="res-id" value="<%= reservations[i].id_reservation%>">Confirm reservation</button>
+                </form>
+                <% } %>
+
+                <% if(reservations[i].statut === "confirmed") {%>
+                    <form action="/checkIN" method="POST">
+                        <label for="room-number"></label>
+                        <br>
+                        &nbsp;<label for="card_num">Client card number: </label> <br>
+                        &nbsp; <input type="text" name="card_num" id="card_num" placeholder="Card Number" required>
+                        <br>
+                        &nbsp; <label for="exp">Expiration date: </label> <br>
+                        &nbsp; <input type="text" name="exp" id="exp" placeholder="mm/year" required>
+                        <br>
+                        &nbsp;<label for="cvv">CVV: </label> <br>
+                        &nbsp; <input type="text" name="cvv" id="exp" placeholder="cvv" required>
+                        <br>
+                        &nbsp; <label for="id_employee">Enter your ID:</label> <br>
+
+                        &nbsp; <input type="text" name="id_employee" id="id_employee" placeholder="employee ID" required>
+                        <button type="submit" name="res-id" value="<%= reservations[i].num_chambre%>">Check-In</button>
+                    </form>
+                    <% } %>
+    
+
+
+        </ul>
+        <br>
+        <% } %>
+        <% } %>
+
+</div>
+
+
+
+
+
+
+
+</body>
+</html>

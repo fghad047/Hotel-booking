@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rooms</title>
+    <link rel="stylesheet" href="styles/index.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+    <nav>
+        <label class="logo">QuickBooks</label>
+        <ul>
+            <li><a href="/" class="header-elem ">Dashboard</a> </li>
+            <li><a href="/rooms" class="header-elem ">Rooms</a> </li>
+            <li><a href="/employees" class="header-elem ">Employees</a> </li>
+        </ul>
+    </nav>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div id="rooms-container">
+       
+        <h3 class="employees-h3">Rooms</h3>
+        <br>
+        <br>
+
+        <% for(let i = 0 ; i < roomsList.length; i++) {%>
+
+            <br>
+
+            <ul>
+                <li> <strong>Room #<%=roomsList[i].num_chambre %></strong></li>
+                <li> Equipped with: <%= roomsList[i].commodites %></li>
+                <li> View: <%= roomsList[i].vue %></li>
+                <li> Area(square meters): <%= roomsList[i].superficie_m2%></li>
+                <br>
+
+                <% if(roomsList[i].extensible === true) { %>
+                    <div>Extendable: yes</div>
+                    <% } else{ %> 
+                        <div>Extendable: no</div>
+
+                        <% } %>
+
+                        <% if(roomsList[i].problemes === true) { %>
+                            <div>Problems: yes</div>
+                            <% } else{ %> 
+                                <div>Problems: no</div>
+        
+                                <% } %>
+                
+
+                <% if(roomsList[i].disponibilite === true) { %>
+                    <div>Available: yes</div>
+                    <% } else{ %> 
+                        <div>Available: no</div>
+
+                        <% } %>
+                
+                <br>
+                <li> Capacity: <%= roomsList[i].capacite %></li>
+                <li> Desc: <%= roomsList[i].description %></li>
+                <br>
+                <li> <%= roomsList[i].prix %>/night</li>
+
+            </ul>
+            <br>
+            <% } %>
+
+
+
+    
+    </div>
+
+    <button class="open-button" onclick="openForm()" id="open-button">Update room</button>
+
+<div class="form-popup" id="myForm">
+  <form action="/updateRoom" method="POST" class="form-container">
+    <h4>Enter room number below and new info</h4>
+
+    <label for="room"><b>Room</b></label>
+    <input type="text" placeholder="room #'s only" name="room" pattern="[0-9]+" required>
+   
+    <label for="capacity"><b>Capacity</b></label>
+    <input type="text" placeholder="capacity" name="capacity" pattern="[0-9]+" >
+
+    <label for="view"><b>View</b></label>
+    <input type="text" placeholder="view" name="view"  >
+
+    <label for="area"><b>Area</b></label>
+    <input type="text" placeholder="area" name="area" pattern="[0-9]+" >
+
+    <label for="desc"><b>Description</b></label>
+    <input type="text" placeholder="description" name="desc" >
+
+    <label for="price"><b>Price</b></label>
+    <input type="text" placeholder="price" name="price" pattern="[0-9]+" >
+
+    <label for="availability"><b>Available</b></label> <br>
+
+    <input type="radio" id="availability" name="availability" value="true">
+    <label for="yes">Yes</label><br>
+  
+    <input type="radio" id="availability" name="availability" value="false">
+    <label for="no">No</label><br>
+
+    <label for="extendable"><b>Extendable</b></label> <br>
+
+    <input type="radio" id="extendable" name="extendable" value="true">
+    <label for="yes">Yes</label><br>
+  
+    <input type="radio" id="extendable" name="extendable" value="false">
+    <label for="no">No</label><br>
+    
+    <label for="problems"><b>Problems</b></label> <br>
+
+    <input type="radio" id="problems" name="problems" value="true">
+    <label for="yes">Yes</label><br>
+  
+    <input type="radio" id="problems" name="problems" value="false">
+    <label for="no">No</label><br>
+<br>
+    <button type="submit" class="btn">SUBMIT</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+  </form>
+</div>
+
+<script>
+        function openForm() {
+      document.getElementById("myForm").style.display = "block";
+    }
+    
+    function closeForm() {
+      document.getElementById("myForm").style.display = "none";
+    }
+</script>
+
+</body>
+</html>

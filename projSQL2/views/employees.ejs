@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employees</title>
+    <link rel="stylesheet" href="styles/index.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+    <nav>
+        <label class="logo">QuickBooks</label>
+        <ul>
+            <li><a href="/" class="header-elem ">Dashboard</a> </li>
+            <li><a href="/rooms" class="header-elem ">Rooms</a> </li>
+            <li><a href="/employees" class="header-elem ">Employees</a> </li>
+        </ul>
+    </nav>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div id="employee-container">
+    <h3 class="employees-h3">Employees</h3>
+    <br>
+    <br>
+    <% for(let i = 0 ; i < employeeList.length; i++) {%>
+    <ul>
+       
+            <li>NAS: <%= employeeList[i].nas_employee %> </li>
+            <li><%= employeeList[i].prenom %> <%= employeeList[i].nom %> </li>
+            <% for (roles of rolesList) {%>
+                <% if (roles.id_role === employeeList[i].id_role ){%>
+                    <li>Role: <%= roles.nom_role %></li>
+                    <li> <%= roles.description %></li>
+                    <br>
+                    <li>Salaire: <%= roles.salaire %></li>
+                  <br>
+                    <% } %>
+                <% } %>
+            <li><%= employeeList[i].adresse %> </li>
+            <li><%= employeeList[i].num_tel %> </li>
+         <br>
+         <br>
+            
+    </ul>
+    <% } %>
+
+
+</div>
+
+
+<button class="open-button" onclick="openForm()" id="open-button">Add employee</button>
+
+<div class="form-popup" id="myForm">
+  <form action="/addEmployee" method="POST" class="form-container">
+    <h4>Enter new employee info</h4>
+    <br>
+
+    <label for="nas"><b>NAS</b></label> <br>
+    <small>* 9 characters min</small><br>
+    <small>* No symbols </small> <br>
+    <small>* Cannot start with a '0'</small>
+    <input type="text" placeholder="NAS (numbers only)" name="nas" pattern="[0-9]+" minlength="9" maxlength="9" required>
+    <span class="validity"></span>
+    <label for="role"><b>Role</b></label> <br>
+
+  <input type="radio" id="Réceptionniste" name="role" value="1000">
+  <label for="Réceptionniste">Réceptionniste</label><br>
+
+  <input type="radio" id="Concierge" name="role" value="1001">
+  <label for="Concierge">Concierge</label><br>
+
+  <input type="radio" id="Chef cuisinier" name="role" value="1002">
+  <label for="Chef cuisinier">Chef cuisinier</label><br>
+
+  <input type="radio" id="Agent de sécurité" name="role" value="1003">
+  <label for="Agent de sécurité">Agent de sécurité</label><br>
+
+  <input type="radio" id="Directeur des ventes" name="role" value="1004">
+  <label for="Directeur des ventes">Directeur des ventes</label><br>
+
+  <br>
+
+    <!-- <input type="text" placeholder="Role" name="id_role" required> -->
+
+    <label for="fname"><b>First name</b></label>
+    <input type="text" placeholder="First name" name="fname" required>
+
+    <label for="lname"><b>Last name</b></label>
+    <input type="text" placeholder="Last name" name="lname" required>
+
+    <label for="num_tel"><b>Phone number</b></label>
+    <input type="text" placeholder="xxx-xxx-xxxx" name="num_tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+
+    <label for="adresse"><b>Address</b></label>
+    <small>Format: APT - Address line 1 - City, State/Province , 
+      Postal/ZIP , Country </small> <br>
+    <input type="text" placeholder="Address" name="adresse" height="80px" required>
+
+    <button type="submit" class="btn">SUBMIT</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+  </form>
+</div>
+    
+<button class="open-button2" onclick="openForm2()" id="open-button">Remove employee</button>
+
+<div class="form-popup2" id="myForm2">
+  <form action="/removeEmployee" method="POST" class="form-container2">
+    <h4>Please enter employees NAS to remove</h4>
+
+    <label for="nas" hidden><b>NAS</b></label>
+    <input type="text" minlength="9" maxlength="9" placeholder="NAS (numbers only)" name="nas" pattern="[0-9]+" required>
+
+    
+    <button type="submit" class="btn">SUBMIT</button>
+    <button type="button" class="btn cancel" onclick="closeForm2()">Close</button>
+  </form>
+</div>
+
+<button class="open-button3" onclick="openForm3()" id="open-button">Update employee</button>
+
+<div class="form-popup3" id="myForm3">
+  <form action="/updateEmployee" method="POST" class="form-container2">
+    <h4>Enter employee info to update</h4>
+    <br>
+    <small> <strong>DISCLAIMER: </strong> You are required to update all fields</small><br>
+    <br>
+    <label for="nas"><b>NAS</b></label> <br>
+    <small>* Make sure NAS matches what's on file</small><br>
+    
+    <input type="text" placeholder="NAS (numbers only)" name="nas" pattern="[0-9]+" minlength="9" maxlength="9" required>
+    <span class="validity"></span>
+    <label for="role"><b>Role</b></label> <br>
+
+  <input type="radio" id="Réceptionniste" name="role" value="1000">
+  <label for="Réceptionniste">Réceptionniste</label><br>
+
+  <input type="radio" id="Concierge" name="role" value="1001">
+  <label for="Concierge">Concierge</label><br>
+
+  <input type="radio" id="Chef cuisinier" name="role" value="1002">
+  <label for="Chef cuisinier">Chef cuisinier</label><br>
+
+  <input type="radio" id="Agent de sécurité" name="role" value="1003">
+  <label for="Agent de sécurité">Agent de sécurité</label><br>
+
+  <input type="radio" id="Directeur des ventes" name="role" value="1004">
+  <label for="Directeur des ventes">Directeur des ventes</label><br>
+
+  <br>
+
+
+    <label for="fname"><b>First name</b></label>
+    <input type="text" placeholder="First name" name="fname" required>
+
+    <label for="lname"><b>Last name</b></label>
+    <input type="text" placeholder="Last name" name="lname" required>
+
+    <label for="num_tel"><b>Phone number</b></label>
+    <input type="text" placeholder="xxx-xxx-xxxx" name="num_tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+
+    <label for="adresse"><b>Address</b></label>
+    <small>Format: APT - Address line 1 - City, State/Province , 
+      Postal/ZIP , Country </small> <br>
+    <input type="text" placeholder="Address" name="adresse" height="80px" required>
+
+    
+    <button type="submit" class="btn">SUBMIT</button>
+    <button type="button" class="btn cancel" onclick="closeForm3()">Close</button>
+  </form>
+</div>
+    
+<script>
+  // document.getElementById("open-button").c
+    function openForm() {
+      document.getElementById("myForm").style.display = "block";
+    }
+    
+    function closeForm() {
+      document.getElementById("myForm").style.display = "none";
+    }
+
+    function openForm2() {
+      document.getElementById("myForm2").style.display = "block";
+    }
+    
+    function closeForm2() {
+      document.getElementById("myForm2").style.display = "none";
+    }
+
+    function openForm3() {
+      document.getElementById("myForm3").style.display = "block";
+    }
+    
+    function closeForm3() {
+      document.getElementById("myForm3").style.display = "none";
+    }
+</script>
+
+
+</body>
+</html>
