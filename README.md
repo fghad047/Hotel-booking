@@ -49,4 +49,11 @@ Web Application Setup
  npm install
 8. Start the application by running:
 node index.js
-Open a browser and go to http://localhost:3232, replacing 3232 with your assigned port if different.
+9.Open a browser and go to http://localhost:3232, replacing 3232 with your assigned port if different.
+
+Usage
+
+To use the application:
+
+1. Open a browser and navigate to http://localhost:3232.
+2. Log in using a customer or admin account. Existing accounts can be found using the query:
